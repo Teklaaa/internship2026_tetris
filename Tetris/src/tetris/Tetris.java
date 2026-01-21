@@ -28,6 +28,23 @@ public class Tetris implements EventProcessor {
 		observer.stateChanged();
 	}
 
+	@Override
+	public void moveLeft() {
+		if (canMoveLeft()) {
+			posX--;
+			observer.stateChanged();
+		}
+	}
+
+	@Override
+	public void moveRight() {
+		if (canMoveRight()) {
+			posX++;
+			observer.stateChanged();
+		}
+	}
+
+
 	public void addObserver(Observer o) {
 		observer = o;
 	}
@@ -37,6 +54,26 @@ public class Tetris implements EventProcessor {
 			for (int j = 0; j < figure[i].length; j++) {
 				if (figure[i][j] == 0) continue;
 				if (posY + i + 1 >= Tetris.HEIGHT) return false;
+			}
+		}
+		return true;
+	}
+
+	public boolean canMoveLeft() {
+		for (int i = 0; i < FIGURE_SIZE; i++) {
+			for (int j = 0; j < FIGURE_SIZE; j++) {
+				if (figure[i][j] == 0) continue;
+				if (posX + j - 1 < 0) return false;
+			}
+		}
+		return true;
+	}
+
+	public boolean canMoveRight() {
+		for (int i = 0; i < FIGURE_SIZE; i++) {
+			for (int j = 0; j < FIGURE_SIZE; j++) {
+				if (figure[i][j] == 0) continue;
+				if (posX + j + 1 >= WIDTH) return false;
 			}
 		}
 		return true;
